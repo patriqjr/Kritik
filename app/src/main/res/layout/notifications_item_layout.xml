@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="3dp">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/notification_profileImage"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:src="@mipmap/profile"
+        android:layout_marginStart="3dp"
+        android:padding="5dp" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/notification_profileImage"
+        android:layout_toStartOf="@+id/notification_postImage"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/username_notification"
+            android:layout_width="wrap_content"
+            android:textStyle="italic"
+            android:text="Anonymous"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:textStyle="italic"
+            android:text=" "
+            android:textColor="@android:color/black"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/comment_notification"
+            android:layout_width="wrap_content"
+            android:textStyle="normal"
+            android:text="*reaction*"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/notification_postImage"
+        android:layout_width="60dp"
+        android:layout_height="50dp"
+        android:layout_alignParentEnd="true"
+        android:scaleType="fitEnd" />
+
+</RelativeLayout>

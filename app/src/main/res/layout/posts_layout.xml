@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_marginTop="5dp"
+    android:layout_marginBottom="30dp"
+    android:layout_marginEnd="20dp"
+    app:cardCornerRadius="5dp"
+    app:cardElevation="20dp"
+    android:layout_marginStart="20dp"
+    android:layout_height="wrap_content">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#141d26"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f6f6f4"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/user_profile_image_post"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="top"
+                android:src="@mipmap/profile"
+                android:padding="5dp" />
+
+            <TextView
+                android:id="@+id/user_name_post"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/alias"
+                android:textSize="16sp"
+                android:layout_marginTop="7dp"
+                android:layout_gravity="top"
+                android:layout_marginStart="5dp"
+                android:textColor="@android:color/black" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:id="@+id/mute_anon"
+                    android:layout_width="25dp"
+                    android:layout_height="25dp"
+                    android:layout_margin="5dp"
+                    android:layout_alignParentEnd="true"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/mute" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/post_image_home"
+            android:layout_width="match_parent"
+            android:layout_height="388dp"
+            android:background="#141d26"
+            android:contentDescription="@string/todo"
+            android:adjustViewBounds="true" />
+
+        <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
+            android:id="@+id/description"
+            android:layout_width="match_parent"
+            android:text=""
+            android:layout_height="wrap_content"
+            android:layout_gravity="top"
+            android:autoLink="web"
+            android:textSize="15sp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:textColor="@android:color/white" />
+
+        <hani.momanii.supernova_emoji_library.Helper.EmojiconTextView
+            android:id="@+id/publisher"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:textSize="15sp"
+            android:visibility="gone"
+            android:textColor="@android:color/black" />
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:orientation="horizontal">
+
+            <com.willy.ratingbar.ScaleRatingBar
+                android:id="@+id/rating_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                app:srb_clearRatingEnabled="false"
+                app:srb_clickable="true"
+                app:srb_drawableEmpty="@drawable/star_empty"
+                app:srb_drawableFilled="@drawable/star_filled"
+                app:srb_isIndicator="false"
+                app:srb_minimumStars="0"
+                app:srb_numStars="5"
+                app:srb_rating="0"
+                android:backgroundTint="@android:color/white"
+                app:srb_scrollable="true"
+                app:srb_starHeight="20dp"
+                app:srb_starPadding="0dp"
+                app:srb_starWidth="20dp"
+                app:srb_stepSize="1" />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/average_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="5dp"
+                    android:text="0/5"
+                    android:textColor="@color/design_default_color_background"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/total_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginStart="5dp"
+                    android:layout_toEndOf="@+id/average_rating"
+                    android:text="(raters : 0)"
+                    android:textColor="@android:color/holo_green_dark"
+                    android:textSize="14sp" />
+
+
+                <ImageView
+                    android:id="@+id/post_save_comment_btn"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="3dp"
+                    android:contentDescription="@string/save"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/save_unfilled_large_icon" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="7dp">
+
+            <ImageView
+                android:id="@+id/post_image_comment_btn"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="top"
+                android:layout_marginStart="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/comment" />
+
+            <TextView
+                android:id="@+id/comments"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_toEndOf="@+id/post_image_comment_btn"
+                android:text=" 0 anonymous comments"
+                android:textColor="@android:color/white"
+                android:textSize="12sp" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
