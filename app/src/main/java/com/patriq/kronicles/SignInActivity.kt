@@ -11,14 +11,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.blogspot.atifsoftwares.animatoolib.Animatoo
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.database.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseException
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.patrick.kronicles.Model.User
 import com.patriq.kronicles.adapter.UserAdapter
-import kotlinx.android.synthetic.main.activity_sign_in.*
+import com.patriq.kronicles.databinding.ActivitySignInBinding
 
 
 class SignInActivity : AppCompatActivity() {
-
+    private lateinit var binding: ActivitySignInBinding
     private var recyclerView: RecyclerView? = null
     private var database: FirebaseDatabase? = FirebaseDatabase.getInstance()
     private var userAdapter: UserAdapter? = null
@@ -26,23 +30,23 @@ class SignInActivity : AppCompatActivity() {
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
-
         if (database == null) {
             FirebaseDatabase.getInstance().apply { setPersistenceEnabled(true) }
         }
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_sign_in)
+        binding = ActivitySignInBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        signup_btn.setOnClickListener {
+        binding.signupBtn.setOnClickListener {
             startActivity(Intent(this, SplashActivity::class.java))
         }
 
-        login_btn.setOnClickListener {
+        binding.loginBtn.setOnClickListener {
             loginUser()
         }
 
-        resetPasswordBtn.setOnClickListener {
-            val email = email_login.text.toString()
+        binding.resetPasswordBtn.setOnClickListener {
+            val email = binding.emailLogin.text.toString()
             if (email == "") {
                 Toast.makeText(this, "no email provided", Toast.LENGTH_LONG).show()
             } else {
@@ -80,8 +84,8 @@ class SignInActivity : AppCompatActivity() {
 
     private fun loginUser() {
         try {
-            val email = email_login.text.toString()
-            val password = password_login.text.toString()
+            val email = binding.emailLogin.text.toString()
+            val password = binding.passwordLogin.text.toString()
 
             when {
                 TextUtils.isEmpty(email) -> Toast.makeText(
@@ -89,11 +93,13 @@ class SignInActivity : AppCompatActivity() {
                     "Provide your email",
                     Toast.LENGTH_LONG
                 ).show()
+
                 TextUtils.isEmpty(password) -> Toast.makeText(
                     this,
                     "Enter your password",
                     Toast.LENGTH_LONG
                 ).show()
+
                 else -> {
                     val prgDialog = ProgressDialog(this@SignInActivity)
                     prgDialog.setTitle("")

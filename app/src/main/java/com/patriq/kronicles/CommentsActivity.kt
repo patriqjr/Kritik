@@ -15,13 +15,14 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.patrick.kronicles.Model.User
 import com.patriq.kronicles.adapter.CommentsAdapter
+import com.patriq.kronicles.databinding.ActivityCommentsBinding
+import com.patriq.kronicles.databinding.ImagesItemLayoutBinding
 import com.patriq.kronicles.model.Comment
 import com.squareup.picasso.Picasso
 import hani.momanii.supernova_emoji_library.Actions.EmojIconActions
-import kotlinx.android.synthetic.main.activity_comments.*
-import kotlinx.android.synthetic.main.images_item_layout.*
 
 class CommentsActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCommentsBinding
     private var postId = ""
     private var publisherId = ""
     private var firebaseUser: FirebaseUser? = null
@@ -31,7 +32,8 @@ class CommentsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         try {
             super.onCreate(savedInstanceState)
-            setContentView(R.layout.activity_comments)
+            binding = ActivityCommentsBinding.inflate(layoutInflater)
+            setContentView(binding.root)
             val intent = intent
             postId = intent.getStringExtra("postId")!!
             publisherId = intent.getStringExtra("publisherId")!!
@@ -47,11 +49,12 @@ class CommentsActivity : AppCompatActivity() {
             userInfo()
             getPostImage()
 
-            val emojiIcon = EmojIconActions(this, recyclerView, add_comment, emojicon_icon)
+            val emojiIcon =
+                EmojIconActions(this, recyclerView, binding.addComment, binding.emojiconIcon)
             emojiIcon.ShowEmojIcon()
 
-            post_comment.setOnClickListener {
-                if (add_comment!!.text.toString() == "") {
+            binding.postComment.setOnClickListener {
+                if (binding.addComment.text.toString() == "") {
                     Toast.makeText(
                         this@CommentsActivity,
                         "Unable to read your mind. Please type comment",
@@ -61,14 +64,14 @@ class CommentsActivity : AppCompatActivity() {
                     addComment()
                 }
             }
-            post_image.setOnClickListener {
+            ImagesItemLayoutBinding.inflate(layoutInflater).postImage.setOnClickListener {
                 val intentComment = Intent(this, ImageFullscreenActivity::class.java)
                 intentComment.putExtra("postId", postId)
                 intentComment.putExtra("publisherId", publisherId)
                 this.startActivity(intentComment)
                 Animatoo.animateSlideLeft(this)
             }
-            close_comments.setOnClickListener {
+            binding.closeComments.setOnClickListener {
                 finish()
                 Animatoo.animateSlideDown(this)
 
@@ -82,14 +85,14 @@ class CommentsActivity : AppCompatActivity() {
             val commentsRef = FirebaseDatabase.getInstance().reference.child("Comments")
                 .child(postId)
             val commentsMap = HashMap<String, Any>()
-            commentsMap["comment"] = add_comment.text.toString().trim()
+            commentsMap["comment"] = binding.addComment.text.toString().trim()
             commentsMap["publisher"] = firebaseUser!!.uid
             commentsMap["post"] = postId
             val hashmapKey = commentsRef.push().key
             commentsMap["hashmapKey"] = hashmapKey.toString()
             commentsRef.child(hashmapKey!!).setValue(commentsMap)
 
-            add_comment!!.text!!.clear()
+            binding.addComment!!.text!!.clear()
         } catch (e: Exception) {
         }
     }
@@ -103,7 +106,7 @@ class CommentsActivity : AppCompatActivity() {
                     if (p0.exists()) {
                         val user = p0.getValue<User>(User::class.java)
                         Picasso.get().load(user!!.getimage()).placeholder(R.mipmap.profile)
-                            .into(profile_image_comment)
+                            .into(binding.profileImageComment)
                     }
                 }
 
@@ -123,7 +126,7 @@ class CommentsActivity : AppCompatActivity() {
                     if (p0.exists()) {
                         val image = p0.value.toString()
                         Picasso.get().load(image).placeholder(R.mipmap.profile)
-                            .into(post_image_comment)
+                            .into(binding.postImageComment)
                     }
                 }
 

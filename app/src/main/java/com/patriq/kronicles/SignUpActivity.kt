@@ -11,31 +11,31 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
-import kotlinx.android.synthetic.main.activity_sign_up.*
-import java.util.*
+import com.patriq.kronicles.databinding.ActivitySignUpBinding
+import java.util.Locale
 
 
 class SignUpActivity : AppCompatActivity() {
     private var firebaseUser: FirebaseUser? = FirebaseAuth.getInstance().currentUser
-
-
+    private lateinit var binding: ActivitySignUpBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        binding = ActivitySignUpBinding.inflate(layoutInflater)
         setContentView(R.layout.activity_sign_up)
 
-        sign_in_btn.setOnClickListener {
+        binding.signInBtn.setOnClickListener {
             startActivity(Intent(this, SignInActivity::class.java))
             Animatoo.animateSlideDown(this)
         }
-        sign_up_btn.setOnClickListener {
+        binding.signUpBtn.setOnClickListener {
             createAccount()
         }
     }
 
     private fun createAccount() {
-        val alias = full_name_sign_up.text.toString().toLowerCase(Locale.ENGLISH)
-        val email = email_sign_up.text.toString()
-        val password = password_sign_up.text.toString()
+        val alias = binding.fullNameSignUp.text.toString().toLowerCase(Locale.ENGLISH)
+        val email = binding.emailSignUp.text.toString()
+        val password = binding.passwordSignUp.text.toString()
 
         when {
             TextUtils.isEmpty(alias) -> Toast.makeText(
@@ -43,11 +43,13 @@ class SignUpActivity : AppCompatActivity() {
                 "Provide an alias please.",
                 Toast.LENGTH_LONG
             ).show()
+
             TextUtils.isEmpty(email) -> Toast.makeText(
                 this,
                 "Provide an email for post ownership and storage. It will be kept anonymous.",
                 Toast.LENGTH_LONG
             ).show()
+
             TextUtils.isEmpty(password) -> Toast.makeText(
                 this,
                 "Provide a password",
